@@ -91,10 +91,17 @@ class objectParser():
                     "/" + topic
                 ))
             else:
-                remappings.append((
-                    self.topicPrefix_ + "/" + topic,
-                    "/" + topic + "_raw"
-                ))
+                # Adding a specific remap for the rgb_view camera
+                if "rgb_view" in topic:
+                    remappings.append((
+                        "/" + topic + "_raw",  # Original topic
+                        self.topicPrefix_ + "/" + topic  # Remapped topic
+                    ))
+                else:
+                    remappings.append((
+                        self.topicPrefix_ + "/" + topic,
+                        "/" + topic + "_raw"
+                    ))
 
         return remappings
     def getConversions(self, *input_sensor_types):
